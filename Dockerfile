@@ -2,7 +2,7 @@ FROM dorowu/ubuntu-desktop-lxde-vnc:bionic
 
 RUN sed -i.bak -e "s%http://tw.archive.ubuntu.com/ubuntu/%http://ftp.iij.ad.jp/pub/linux/ubuntu/archive/%g" /etc/apt/sources.list
 
-RUN useradd -U -d /root/ardupilot ardupilot && \
+RUN useradd -U -d /home/ardupilot ardupilot && \
     usermod -G users ardupilot
 
 RUN apt-get update && apt-get install -y \
@@ -18,7 +18,8 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get update && apt-get install -q -y \
     dirmngr \
     gnupg2 \
-    lsb-release
+    lsb-release \
+    apt-utils
 
 RUN apt-get update && apt-get upgrade -y \
     && wget https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_tools/master/install_ros_melodic.sh && chmod 755 ./install_ros_melodic.sh && bash ./install_ros_melodic.sh
@@ -36,22 +37,22 @@ RUN apt-get update && apt-get install -y \
 # Gazebo upgrade
 RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" >> /etc/apt/sources.list.d/gazebo-stable.list
 RUN su -c "bash -c 'wget http://packages.osrfoundation.org/gazebo.key -O - |  apt-key add - '" $USERNAME
-RUN apt update
-RUN apt upgrade -y
+RUN apt-get update
+RUN apt-get upgrade -y
 
 # download ardupilot
 ENV USER=ardupilot
-RUN cd /root/ \
+RUN cd /home \
     && git clone https://github.com/ArduPilot/ardupilot \
     && cd ardupilot && git submodule update --init --recursive
 
 RUN echo "ardupilot ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ardupilot
 RUN chmod 0440 /etc/sudoers.d/ardupilot
 
-RUN chown -R ardupilot:ardupilot /root/ardupilot
+RUN chown -R ardupilot:ardupilot /home/ardupilot
 
 USER ardupilot
-RUN /root/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y
+RUN /home/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y
 
 # ardupilot_gazebo
 USER root
