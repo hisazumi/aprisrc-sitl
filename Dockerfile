@@ -1,7 +1,5 @@
 FROM dorowu/ubuntu-desktop-lxde-vnc:bionic
 
-RUN sed -i.bak -e "s%http://tw.archive.ubuntu.com/ubuntu/%http://ftp.iij.ad.jp/pub/linux/ubuntu/archive/%g" /etc/apt/sources.list
-
 RUN useradd -U -d /home/ardupilot ardupilot && \
     usermod -G users ardupilot
 
@@ -12,7 +10,8 @@ RUN apt-get update && apt-get install -y \
         libflann-dev \
 	libgsl0-dev \
         libgoogle-perftools-dev \
-        libeigen3-dev
+        libeigen3-dev \
+	openssl
 
 # Intall ROS
 RUN apt-get update && apt-get install -q -y \
@@ -40,6 +39,15 @@ RUN su -c "bash -c 'wget http://packages.osrfoundation.org/gazebo.key -O - |  ap
 RUN apt-get update
 RUN apt-get upgrade -y
 
+# ardupilot_gazebo
+RUN cd /root/ \
+	&& git clone https://github.com/khancyr/ardupilot_gazebo \
+	&& cd ardupilot_gazebo \
+	&& mkdir build && cd build \
+	&& cmake .. \
+	&& make -j4 \
+	&& sudo make install
+
 # download ardupilot
 ENV USER=ardupilot
 RUN cd /home \
@@ -54,15 +62,6 @@ RUN chown -R ardupilot:ardupilot /home/ardupilot
 USER ardupilot
 RUN /home/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y
 
-# ardupilot_gazebo
-USER root
-RUN cd /root/ \
-	&& git clone https://github.com/khancyr/ardupilot_gazebo \
-	&& cd ardupilot_gazebo \
-	&& mkdir build && cd build \
-	&& cmake .. \
-	&& make -j4 \
-	&& sudo make install
 
 # Create start shell on root Desktop
 
