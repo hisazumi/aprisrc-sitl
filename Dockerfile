@@ -24,7 +24,8 @@ RUN apt-get update \
         dirmngr \
         gnupg2 \
         lsb-release \
-        apt-utils
+        apt-utils \
+        rsync
 
 # Intall ROS
 RUN wget https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_tools/master/install_ros_melodic.sh \
@@ -89,4 +90,4 @@ RUN echo "#!/bin/bash" >> $HOME/Desktop/sitl.sh \
 
 RUN echo "source /opt/ros/melodic/setup.bash" >> $HOME/.bashrc \
     && echo "source $HOME/catkin_ws/devel/setup.bash" >> $HOME/.bashrc \
-    && echo '$HOME/.loocal/bin:$PATH' >> $HOME/.bashrc 
+    && echo 'export PATH=$HOME/.loocal/bin:$PATH' >> $HOME/.bashrc 
