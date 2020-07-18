@@ -9,7 +9,7 @@ docker run -p 8080:80 hisazumi/aprisrc-stil:latest
 
 3. Double click 'simulator.sh' on the desktop to launch Gazebo simulator. Wait a minute. 
 
-4. Double click 'sitl.sh' on the desktop and select 'Execute in Terminal' to launch the Software-in-the-Loop env of ArduPilot. Wait a minute.
+4. Open LXTerminal and execute ./Desktop/sitl.sh to launch the Software-in-the-Loop env of ArduPilot. Wait a minute.
 
 5. Input SITL temrinal as follows:
 ```
