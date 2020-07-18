@@ -91,4 +91,4 @@ RUN echo "#!/bin/bash" >> $HOME/Desktop/sitl.sh \
 
 RUN echo "source /opt/ros/melodic/setup.bash" >> $HOME/.bashrc \
     && echo "source $HOME/catkin_ws/devel/setup.bash" >> $HOME/.bashrc \
-    && echo 'export PATH=$HOME/.loocal/bin:$PATH' >> $HOME/.bashrc 
+    && echo 'export PATH=$HOME/.local/bin:$PATH' >> $HOME/.bashrc 
