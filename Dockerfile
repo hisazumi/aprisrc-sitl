@@ -85,7 +85,8 @@ RUN echo "#!/bin/bash" >> $HOME/Desktop/simulator.sh \
 # SITL Launcher
 RUN echo "#!/bin/bash" >> $HOME/Desktop/sitl.sh \
     && echo "" >> $HOME/Desktop/sitl.sh \
-    && echo "cd $HOME/ardupilot/ArduCopter && ../Tools/autotest/sim_vehicle.py -f gazebo-iris --console --map" >> $HOME/Desktop/sitl.sh \
+    && echo 'cd $HOME/ardupilot/ArduCopter' >> $HOME/Desktop/sitl.sh \
+    && echo '../Tools/autotest/sim_vehicle.py -f gazebo-iris --console --map' >> $HOME/Desktop/sitl.sh \
     && chmod +x $HOME/Desktop/sitl.sh
 
 RUN echo "source /opt/ros/melodic/setup.bash" >> $HOME/.bashrc \
