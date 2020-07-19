@@ -1,13 +1,13 @@
 FROM dorowu/ubuntu-desktop-lxde-vnc:bionic
 
-WORKDIR /ardupilot
+WORKDIR /home/ubuntu
 
 # add user 'ardupilot'
-RUN useradd -U -d /ardupilot ardupilot && \
-    usermod -G users ardupilot
+RUN useradd -U -d /home/ubuntu ubuntu && \
+    usermod -G users ubuntu
 
-RUN echo "ardupilot ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ardupilot
-RUN chmod 0440 /etc/sudoers.d/ardupilot
+RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu
+RUN chmod 0440 /etc/sudoers.d/ubuntu
 
 # update basic packages
 RUN apt-get update \
@@ -37,11 +37,11 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources
         ros-melodic-ros-base \
         gazebo9 libgazebo9-dev \
         python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && rosdep init && rosdep update
 
 # ardupilot_gazebo
-RUN mkdir $HOME \
-    && cd $HOME \
+RUN cd $HOME \
 	&& git clone https://github.com/khancyr/ardupilot_gazebo \
 	&& cd ardupilot_gazebo \
 	&& mkdir build && cd build \
@@ -56,13 +56,14 @@ RUN cd $HOME \
     && cd ardupilot && git submodule update --init --recursive
 
 # change user to install ArduPilot env
-RUN chown -R ardupilot:ardupilot $HOME
-USER ardupilot
-ENV USER=ardupilot
+RUN chown -R ubuntu $HOME
+USER ubuntu
+ENV USER=ubuntu
 # install ardupilot
 ENV SKIP_AP_EXT_ENV=1 SKIP_AP_GRAPHIC_ENV=1 SKIP_AP_COV_ENV=1 SKIP_AP_GIT_CHECK=1
-RUN $HOME/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y
-ENV USER=ubuntu
+RUN $HOME/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Create start shell on root Desktop
 USER root
