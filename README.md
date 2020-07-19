@@ -2,7 +2,7 @@
 
 1. Launch the container in your host side
 ```
-docker run -p 8080:80 hisazumi/aprisrc-stil:latest
+docker run -p 8080:80 hisazumi/aprisrc-sitl:latest
 ```
 
 2. Access http://localhost:8080 from your Web broswer
