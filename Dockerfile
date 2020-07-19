@@ -62,8 +62,8 @@ ENV USER=ubuntu
 # install ardupilot
 ENV SKIP_AP_EXT_ENV=1 SKIP_AP_GRAPHIC_ENV=1 SKIP_AP_COV_ENV=1 SKIP_AP_GIT_CHECK=1
 RUN $HOME/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && sudo apt-get clean \
+    && sudo rm -rf /var/lib/apt/lists/*
 
 # Create start shell on root Desktop
 USER root
