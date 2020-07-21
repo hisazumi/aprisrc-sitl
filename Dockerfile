@@ -41,6 +41,16 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources
     && rm -rf /var/lib/apt/lists/* \
     && rosdep init && rosdep update
 
+# create catkin workspace and clone iq_sim, iq_gnc
+RUN cd $HOME \
+    && mkdir catkin_ws && cd catkin_ws \
+    && catkin init \
+    && mkdir src && cd src \
+    && git clone https://github.com/Intelligent-Quads/iq_sim \
+    && git clone https://github.com/Intelligent-Quads/iq_gnc \
+    && cd .. \
+    && catkin build
+
 # ardupilot_gazebo
 RUN cd $HOME \
 	&& git clone https://github.com/khancyr/ardupilot_gazebo \
