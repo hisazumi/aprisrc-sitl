@@ -49,14 +49,18 @@ RUN cd $HOME \
     && git clone https://github.com/Intelligent-Quads/iq_sim \
     && git clone https://github.com/Intelligent-Quads/iq_gnc
 
-# ardupilot_gazebo
+# ardupilot_gazebo and install geographiclib dataset
 RUN cd $HOME \
 	&& git clone https://github.com/khancyr/ardupilot_gazebo \
 	&& cd ardupilot_gazebo \
 	&& mkdir build && cd build \
 	&& cmake .. \
 	&& make -j4 \
-	&& sudo make install
+	&& sudo make install \
+	&& cd $HOME \
+	&& wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh \
+	&& chmod +x ./install_geographiclib_datasets.sh \
+	&& ./install_geographiclib_datasets.sh
 
 # download ardupilot
 #ENV USER=ardupilot
