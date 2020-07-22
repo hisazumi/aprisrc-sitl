@@ -35,7 +35,7 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources
     && apt-get upgrade -y \ 
     && apt-get install -y \
         ros-melodic-ros-base \
-        gazebo9 libgazebo9-dev \
+        gazebo9 libgazebo9-dev ros-melodic-gazebo-ros \
         ros-melodic-mavros ros-melodic-mavros-extras ros-melodic-mavlink \
         python-rosdep python-rosinstall python-rosinstall-generator python-wstool python-catkin-tools build-essential \
     && rm -rf /var/lib/apt/lists/* \
@@ -95,5 +95,8 @@ RUN echo "#!/bin/bash" >> $HOME/Desktop/sitl.sh \
     && echo '../Tools/autotest/sim_vehicle.py -f gazebo-iris --console --map' >> $HOME/Desktop/sitl.sh \
     && chmod +x $HOME/Desktop/sitl.sh
 
+# setup
 RUN echo "source /opt/ros/melodic/setup.bash" >> $HOME/.bashrc \
-    && echo 'export PATH=$HOME/.local/bin:$PATH' >> $HOME/.bashrc 
+    && echo 'source /usr/share/gazebo/setup.sh' >> ~/.bashrc \
+    && echo 'source $HOME/catkin_ws/devel/setup.bash' >> $HOME/.bashrc \
+    && echo 'export PATH=$HOME/.local/bin:$PATH' >> $HOME/.bashrc
