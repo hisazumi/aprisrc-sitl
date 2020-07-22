@@ -47,9 +47,7 @@ RUN cd $HOME \
     && catkin init \
     && mkdir src && cd src \
     && git clone https://github.com/Intelligent-Quads/iq_sim \
-    && git clone https://github.com/Intelligent-Quads/iq_gnc \
-    && cd .. \
-    && catkin build
+    && git clone https://github.com/Intelligent-Quads/iq_gnc
 
 # ardupilot_gazebo
 RUN cd $HOME \
