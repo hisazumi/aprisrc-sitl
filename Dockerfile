@@ -35,19 +35,32 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources
     && apt-get upgrade -y \ 
     && apt-get install -y \
         ros-melodic-ros-base \
-        gazebo9 libgazebo9-dev \
-        python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential \
+        gazebo9 libgazebo9-dev ros-melodic-gazebo-ros \
+        ros-melodic-mavros ros-melodic-mavros-extras ros-melodic-mavlink \
+        python-rosdep python-rosinstall python-rosinstall-generator python-wstool python-catkin-tools build-essential \
     && rm -rf /var/lib/apt/lists/* \
     && rosdep init && rosdep update
 
-# ardupilot_gazebo
+# create catkin workspace and clone iq_sim, iq_gnc
+RUN cd $HOME \
+    && mkdir catkin_ws && cd catkin_ws \
+    && catkin init \
+    && mkdir src && cd src \
+    && git clone https://github.com/Intelligent-Quads/iq_sim \
+    && git clone https://github.com/Intelligent-Quads/iq_gnc
+
+# ardupilot_gazebo and install geographiclib dataset
 RUN cd $HOME \
 	&& git clone https://github.com/khancyr/ardupilot_gazebo \
 	&& cd ardupilot_gazebo \
 	&& mkdir build && cd build \
 	&& cmake .. \
 	&& make -j4 \
-	&& sudo make install
+	&& sudo make install \
+	&& cd $HOME \
+	&& wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh \
+	&& chmod +x ./install_geographiclib_datasets.sh \
+	&& ./install_geographiclib_datasets.sh
 
 # download ardupilot
 #ENV USER=ardupilot
@@ -82,5 +95,8 @@ RUN echo "#!/bin/bash" >> $HOME/Desktop/sitl.sh \
     && echo '../Tools/autotest/sim_vehicle.py -f gazebo-iris --console --map' >> $HOME/Desktop/sitl.sh \
     && chmod +x $HOME/Desktop/sitl.sh
 
+# setup
 RUN echo "source /opt/ros/melodic/setup.bash" >> $HOME/.bashrc \
-    && echo 'export PATH=$HOME/.local/bin:$PATH' >> $HOME/.bashrc 
+    && echo 'source /usr/share/gazebo/setup.sh' >> ~/.bashrc \
+    && echo 'source $HOME/catkin_ws/devel/setup.bash' >> $HOME/.bashrc \
+    && echo 'export PATH=$HOME/.local/bin:$PATH' >> $HOME/.bashrc
