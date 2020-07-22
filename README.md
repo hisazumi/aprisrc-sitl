@@ -23,23 +23,35 @@ takeoff 1
 # Control a quad-copter from a C++ program
 
 1. Build sample source codes. Open LXTerminal and execute commands as follows:
+
 ```
 cd catkin
 catkin build
 ```
 
-2. Execute the Gazebo simulator. Double click 'simulator.sh' on the desktop to launch Gazebo simulator. Wait a minute. 
+and relaunch LXTerminal (or just execute bash) to reload ~/.bashrc
 
-3. Open LXTerminal and execute ./Desktop/sitl.sh to launch the Software-in-the-Loop env of ArduPilot. Wait a minute.
+1. Edit catkin_ws/src/iq_gnc/CMakefile.txt to enable to build gnc_tutorial.cpp. Remove '#' the head of the lines as follows:
 
-
-3. Open a new tab (or window) in LXTerminal and execute a command as follows:
 ```
-roslaunch iq_sim runway.launch
-# New Terminal
+206: add_executable(gnc_example src/gnc_tutorial.cpp)
+207: target_link_libraries(gnc_example ${catkin_LIBRARIES})
+```
+
+1. Execute the Gazebo simulator. Double click 'simulator.sh' on the desktop to launch Gazebo simulator. Wait a minute. 
+
+1. Execute ./Desktop/sitl.sh in new tab in terminal to launch the Software-in-the-Loop env of ArduPilot. Wait a minute.
+
+1. Launch apm in new tab in terminal:
+
+```
 roslaunch iq_sim apm.launch
-# New Terminal 
-rosrun iq_gnc square
+```
+
+1. Launch sample code in new tab:
+
+```
+rosrun iq_gnc gnc_example
 ```
 
 
