@@ -31,29 +31,34 @@ catkin build
 
 and relaunch LXTerminal (or just execute bash) to reload ~/.bashrc
 
-1. Edit catkin_ws/src/iq_gnc/CMakefile.txt to enable to build gnc_tutorial.cpp. Remove '#' the head of the lines as follows:
+2. Edit catkin_ws/src/iq_gnc/CMakefile.txt to enable to build gnc_tutorial.cpp. Remove '#' the head of the lines as follows:
 
 ```
 206: add_executable(gnc_example src/gnc_tutorial.cpp)
 207: target_link_libraries(gnc_example ${catkin_LIBRARIES})
 ```
 
-1. Execute the Gazebo simulator. Double click 'simulator.sh' on the desktop to launch Gazebo simulator. Wait a minute. 
+3. Execute the Gazebo simulator. Double click 'simulator.sh' on the desktop to launch Gazebo simulator. Wait a minute. 
 
-1. Execute ./Desktop/sitl.sh in new tab in terminal to launch the Software-in-the-Loop env of ArduPilot. Wait a minute.
+4. Execute ./Desktop/sitl.sh in new tab in terminal to launch the Software-in-the-Loop env of ArduPilot. Wait a minute.
 
-1. Launch apm in new tab in terminal:
+5. Launch apm in new tab in terminal:
 
 ```
 roslaunch iq_sim apm.launch
 ```
 
-1. Launch sample code in new tab:
+6. Launch sample code in new tab:
 
 ```
 rosrun iq_gnc gnc_example
 ```
 
+7. Finally change mode to guided in sitl.sh terminal
+
+```
+mode guided
+````
 
 # References
 - Base container https://hub.docker.com/r/dorowu/ubuntu-desktop-lxde-vnc/ 
