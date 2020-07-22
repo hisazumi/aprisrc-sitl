@@ -35,7 +35,7 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources
     && apt-get upgrade -y \ 
     && apt-get install -y \
         ros-melodic-ros-base \
-        gazebo9 libgazebo9-dev \
+        gazebo9 libgazebo9-dev ros-melodic-gazebo-ros \
         ros-melodic-mavros ros-melodic-mavros-extras ros-melodic-mavlink \
         python-rosdep python-rosinstall python-rosinstall-generator python-wstool python-catkin-tools build-essential \
     && rm -rf /var/lib/apt/lists/* \
