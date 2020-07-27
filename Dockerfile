@@ -82,7 +82,7 @@ RUN $HOME/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y \
 ENV BPFILE=org.xtuml.bp.product-linux.gtk.x86_64.zip
 COPY $BPFILE /opt
 RUN cd /opt \
-	&& unzip $BPFILE
+	&& unzip $BPFILE \
 	&& rm $BPFILE
 
 # Create start shell on root Desktop
