@@ -79,14 +79,14 @@ RUN $HOME/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y \
     && sudo rm -rf /var/lib/apt/lists/*
 
 # install BridgePoint
+USER root
 ENV BPFILE=org.xtuml.bp.product-linux.gtk.x86_64.zip
-COPY $BPFILE /opt
 RUN cd /opt \
+	&& wget https://archive.iii.kyushu-u.ac.jp/proself/publicweb/publicweb.go/get/zQEogAKIR83Amq0BTcxzFHSOScDloVx0MkluZekjHkLe/org.xtuml.bp.product-linux.gtk.x86_64.zip
 	&& unzip $BPFILE \
 	&& rm $BPFILE
 
 # Create start shell on root Desktop
-USER root
 RUN mkdir $HOME/Desktop
 
 # Gazebo Launcher
