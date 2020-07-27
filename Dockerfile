@@ -80,11 +80,14 @@ RUN $HOME/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y \
 
 # install BridgePoint
 USER root
-ENV BPFILE=org.xtuml.bp.product-linux.gtk.x86_64.zip
+ENV FID=1pKfnoVFFEykcXuDG26_isCIbAfSxYMXD
 RUN cd /opt \
-	&& wget https://archive.iii.kyushu-u.ac.jp/proself/publicweb/publicweb.go/get/zQEogAKIR83Amq0BTcxzFHSOScDloVx0MkluZekjHkLe/org.xtuml.bp.product-linux.gtk.x86_64.zip
-	&& unzip $BPFILE \
-	&& rm $BPFILE
+  	&& CONFIRM=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://docs.google.com/uc?export=download&id=$FID" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p') \
+	&& echo $CONFIRM \
+	&& wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$CONFIRM&id=$FID" -O bp.zip \
+	&& rm -rf /tmp/cookies.txt \
+	&& unzip bp.zip \
+	&& rm bp.zip
 
 # Create start shell on root Desktop
 RUN mkdir $HOME/Desktop
