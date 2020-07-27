@@ -78,6 +78,13 @@ RUN $HOME/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y \
     && sudo apt-get clean \
     && sudo rm -rf /var/lib/apt/lists/*
 
+# install BridgePoint
+ENV BPFILE=org.xtuml.bp.product-linux.gtk.x86_64.zip
+COPY $BPFILE /opt
+RUN cd /opt \
+	&& unzip $BPFILE
+	&& rm $BPFILE
+
 # Create start shell on root Desktop
 USER root
 RUN mkdir $HOME/Desktop
@@ -99,4 +106,4 @@ RUN echo "#!/bin/bash" >> $HOME/Desktop/sitl.sh \
 RUN echo "source /opt/ros/melodic/setup.bash" >> $HOME/.bashrc \
     && echo 'source /usr/share/gazebo/setup.sh' >> ~/.bashrc \
     && echo 'source $HOME/catkin_ws/devel/setup.bash' >> $HOME/.bashrc \
-    && echo 'export PATH=$HOME/.local/bin:$PATH' >> $HOME/.bashrc
+    && echo 'export PATH=$HOME/.local/bin:/opt/BridgePoint:$PATH' >> $HOME/.bashrc
