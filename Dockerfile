@@ -20,12 +20,13 @@ RUN apt-get update \
     	libgsl0-dev \
         libgoogle-perftools-dev \
         libeigen3-dev \
-	    openssl \
+	openssl \
         dirmngr \
         gnupg2 \
         lsb-release \
         apt-utils \
-        rsync
+        rsync \
+	openjdk-8-jre
 
 # Intall ROS
 
