@@ -20,12 +20,13 @@ RUN apt-get update \
     	libgsl0-dev \
         libgoogle-perftools-dev \
         libeigen3-dev \
-	    openssl \
+	openssl \
         dirmngr \
         gnupg2 \
         lsb-release \
         apt-utils \
-        rsync
+        rsync \
+	openjdk-8-jre
 
 # Intall ROS
 
@@ -78,8 +79,18 @@ RUN $HOME/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y \
     && sudo apt-get clean \
     && sudo rm -rf /var/lib/apt/lists/*
 
-# Create start shell on root Desktop
+# install BridgePoint
 USER root
+ENV FID=1pKfnoVFFEykcXuDG26_isCIbAfSxYMXD
+RUN cd /opt \
+  	&& CONFIRM=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://docs.google.com/uc?export=download&id=$FID" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p') \
+	&& echo $CONFIRM \
+	&& wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$CONFIRM&id=$FID" -O bp.zip \
+	&& rm -rf /tmp/cookies.txt \
+	&& unzip bp.zip \
+	&& rm bp.zip
+
+# Create start shell on root Desktop
 RUN mkdir $HOME/Desktop
 
 # Gazebo Launcher
@@ -99,4 +110,4 @@ RUN echo "#!/bin/bash" >> $HOME/Desktop/sitl.sh \
 RUN echo "source /opt/ros/melodic/setup.bash" >> $HOME/.bashrc \
     && echo 'source /usr/share/gazebo/setup.sh' >> ~/.bashrc \
     && echo 'source $HOME/catkin_ws/devel/setup.bash' >> $HOME/.bashrc \
-    && echo 'export PATH=$HOME/.local/bin:$PATH' >> $HOME/.bashrc
+    && echo 'export PATH=$HOME/.local/bin:/opt/BridgePoint:$PATH' >> $HOME/.bashrc
