@@ -26,8 +26,12 @@ RUN apt-get update \
         lsb-release \
         apt-utils \
         rsync \
-	openjdk-8-jre
-
+	openjdk-8-jre \
+# remove unnessesary packages
+     && apt remove chromium-browser firefox  gcc-7-arm-linux-gnueabihf \
+     && rm -rf /opt/gcc-arm-none-eabi-6-2017-q2-update/ \
+     && apt autoremove
+     
 # Intall ROS
 
 RUN echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources.list.d/ros-latest.list \
