@@ -28,7 +28,7 @@ RUN apt-get update \
         rsync \
 	openjdk-8-jre \
 # remove unnessesary packages
-     && apt remove chromium-browser firefox  gcc-7-arm-linux-gnueabihf \
+     && apt remove chromium-browser firefox \
      && rm -rf /opt/gcc-arm-none-eabi-6-2017-q2-update/ \
      && apt autoremove
      
