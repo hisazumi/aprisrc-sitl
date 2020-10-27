@@ -48,8 +48,7 @@ RUN cd $HOME \
     && catkin init \
     && mkdir src && cd src \
     && git clone https://github.com/Intelligent-Quads/iq_sim \
-    && git clone https://github.com/Intelligent-Quads/iq_gnc \
-    && git clone https://github.com/hisazumi/gnc
+    && git clone https://github.com/Intelligent-Quads/iq_gnc
 
 # ardupilot_gazebo and install geographiclib dataset
 RUN cd $HOME \
