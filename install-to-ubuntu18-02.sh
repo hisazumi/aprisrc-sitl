@@ -28,7 +28,7 @@ echo "deb http://packages.ros.org/ros/ubuntu bionic main" | sudo tee /etc/apt/so
     && sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 \
     && sudo apt-get update -y \
     && sudo apt-get upgrade -y \
-    && sudo apt-get install -y ros-melodic-desktop-full
+    && sudo apt-get install -y ros-melodic-desktop-full python-catkin-tools
 
 # create catkin workspace and clone iq_sim, iq_gnc
 cd $HOME \
