@@ -1,11 +1,9 @@
 HOME=/home/ubuntu
 
-git config --global url."https://".insteadOf git://
-
 # update basic packages
-apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install -q -y \
+sudo apt-get update \
+    && sudo apt-get upgrade -y \
+    && sudo apt-get install -q -y \
         software-properties-common \
         wget curl git cmake cmake-curses-gui \
         libboost-all-dev \
@@ -19,21 +17,18 @@ apt-get update \
         lsb-release \
         apt-utils \
         rsync \
-    	openjdk-8-jre
+    	openjdk-8-jre \
+        git
+
+git config --global url."https://".insteadOf git://
 
 # Intall ROS
 
-echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources.list.d/ros-latest.list \
-    && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 \
-    && apt-get update -y \
-    && apt-get upgrade -y \ 
-    && apt-get install -y \
-        ros-melodic-ros-base \
-        gazebo9 libgazebo9-dev ros-melodic-gazebo-ros \
-        ros-melodic-mavros ros-melodic-mavros-extras ros-melodic-mavlink \
-        python-rosdep python-rosinstall python-rosinstall-generator python-wstool python-catkin-tools build-essential \
-    && rm -rf /var/lib/apt/lists/* \
-    && rosdep init && rosdep update
+echo "deb http://packages.ros.org/ros/ubuntu bionic main" | sudo tee /etc/apt/sources.list.d/ros-latest.list \
+    && sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 \
+    && sudo apt-get update -y \
+    && sudo apt-get upgrade -y \
+    && sudo apt-get install -y ros-melodic-desktop-full
 
 # create catkin workspace and clone iq_sim, iq_gnc
 cd $HOME \
@@ -62,7 +57,7 @@ cd $HOME \
     && cd ardupilot && git submodule update --init --recursive
 
 # change user to install ArduPilot env
-SKIP_AP_EXT_ENV=1 SKIP_AP_GRAPHIC_ENV=1 SKIP_AP_COV_ENV=1 SKIP_AP_GIT_CHECK=1 $HOME/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y
+SKIP_AP_EXT_ENV=1 SKIP_AP_GRAPHIC_ENV=1 SKIP_AP_COV_ENV=1 SKIP_AP_GIT_CHECK=1  $HOME/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y
 
 # install BridgePoint
 #USER root
