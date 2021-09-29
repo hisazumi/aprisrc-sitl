@@ -1,7 +1,6 @@
 HOME=/home/ubuntu
 
-echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu
-chmod 0440 /etc/sudoers.d/ubuntu
+git config --global url."https://".insteadOf git://
 
 # update basic packages
 apt-get update \
@@ -58,33 +57,26 @@ cd $HOME \
 	&& ./install_geographiclib_datasets.sh
 
 # download ardupilot
-#ENV USER=ardupilot
 cd $HOME \
     && git clone https://github.com/ArduPilot/ardupilot \
     && cd ardupilot && git submodule update --init --recursive
 
 # change user to install ArduPilot env
-SKIP_AP_EXT_ENV=1
-SKIP_AP_GRAPHIC_ENV=1
-SKIP_AP_COV_ENV=1
-SKIP_AP_GIT_CHECK=1
-RUN $HOME/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y \
-    && sudo apt-get clean \
-    && sudo rm -rf /var/lib/apt/lists/*
+SKIP_AP_EXT_ENV=1 SKIP_AP_GRAPHIC_ENV=1 SKIP_AP_COV_ENV=1 SKIP_AP_GIT_CHECK=1 $HOME/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y
 
 # install BridgePoint
-USER root
-ENV FID=1pKfnoVFFEykcXuDG26_isCIbAfSxYMXD
-RUN cd /opt \
-  	&& CONFIRM=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://docs.google.com/uc?export=download&id=$FID" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p') \
-	&& echo $CONFIRM \
-	&& wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$CONFIRM&id=$FID" -O bp.zip \
-	&& rm -rf /tmp/cookies.txt \
-	&& unzip bp.zip \
-	&& rm bp.zip
+#USER root
+#ENV FID=1pKfnoVFFEykcXuDG26_isCIbAfSxYMXD
+#RUN cd /opt \
+#  	&& CONFIRM=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://docs.google.com/uc?export=download&id=$FID" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p') \#
+#	&& echo $CONFIRM \
+#	&& wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$CONFIRM&id=$FID" -O bp.zip \
+#	&& rm -rf /tmp/cookies.txt \
+#	&& unzip bp.zip \
+#	&& rm bp.zip
 
 # Create start shell on root Desktop
-mkdir -f $HOME/Desktop
+#mkdir -f $HOME/Desktop
 
 # Gazebo Launcher
 echo "#!/bin/bash" >> $HOME/Desktop/simulator.sh \
@@ -101,12 +93,10 @@ echo "#!/bin/bash" >> $HOME/Desktop/sitl.sh \
     && chmod +x $HOME/Desktop/sitl.sh
 
 # BridgePoint Launcher
-ln -s /opt/BridgePoint/bridgepoint ~/Desktop/
+# ln -s /opt/BridgePoint/bridgepoint ~/Desktop/
 
 # setup
 echo "source /opt/ros/melodic/setup.bash" >> $HOME/.bashrc \
     && echo 'source /usr/share/gazebo/setup.sh' >> ~/.bashrc \
     && echo 'source $HOME/catkin_ws/devel/setup.bash' >> $HOME/.bashrc \
     && echo 'export PATH=$HOME/.local/bin:/opt/BridgePoint:$PATH' >> $HOME/.bashrc
-
-chown -R ubuntu $HOME
