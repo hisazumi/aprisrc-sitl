@@ -10,7 +10,8 @@ RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu
 RUN chmod 0440 /etc/sudoers.d/ubuntu
 
 # update basic packages
-RUN apt-get update \
+RUN rm /etc/apt/sources.list.d/google-chrome.list \
+    && apt-get update \
     && apt-get upgrade -y \
     && apt-get install -q -y \
         software-properties-common \
@@ -20,7 +21,7 @@ RUN apt-get update \
     	libgsl0-dev \
         libgoogle-perftools-dev \
         libeigen3-dev \
-	openssl \
+    	openssl \
         dirmngr \
         gnupg2 \
         lsb-release \
