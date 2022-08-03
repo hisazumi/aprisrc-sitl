@@ -1,4 +1,4 @@
-FROM dorowu/ubuntu-desktop-lxde-vnc:bionic
+FROM dorowu/ubuntu-desktop-lxde-vnc:focal-lxqt
 
 WORKDIR /home/ubuntu
 
@@ -30,14 +30,13 @@ RUN apt-get update \
 
 # Intall ROS
 
-RUN echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources.list.d/ros-latest.list \
-    && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 \
+RUN echo "deb http://packages.ros.org/ros/ubuntu focal main" > /etc/apt/sources.list.d/ros-latest.list \
+    && curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add - \
     && apt-get update -y \
     && apt-get upgrade -y \ 
     && apt-get install -y \
-        ros-melodic-ros-base \
-        gazebo9 libgazebo9-dev ros-melodic-gazebo-ros \
-        ros-melodic-mavros ros-melodic-mavros-extras ros-melodic-mavlink \
+        ros-noetic-ros-base \
+        ros-noetic-mavros ros-noetic-mavros-extras ros-noetic-mavlink \
         python-rosdep python-rosinstall python-rosinstall-generator python-wstool python-catkin-tools build-essential \
     && rm -rf /var/lib/apt/lists/* \
     && rosdep init && rosdep update
@@ -49,19 +48,6 @@ RUN cd $HOME \
     && mkdir src && cd src \
     && git clone https://github.com/Intelligent-Quads/iq_sim \
     && git clone https://github.com/Intelligent-Quads/iq_gnc
-
-# ardupilot_gazebo and install geographiclib dataset
-RUN cd $HOME \
-	&& git clone https://github.com/khancyr/ardupilot_gazebo \
-	&& cd ardupilot_gazebo \
-	&& mkdir build && cd build \
-	&& cmake .. \
-	&& make -j4 \
-	&& sudo make install \
-	&& cd $HOME \
-	&& wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh \
-	&& chmod +x ./install_geographiclib_datasets.sh \
-	&& ./install_geographiclib_datasets.sh
 
 # download ardupilot
 #ENV USER=ardupilot
@@ -111,7 +97,6 @@ RUN echo "#!/bin/bash" >> $HOME/Desktop/sitl.sh \
 RUN ln -s /opt/BridgePoint/bridgepoint ~/Desktop/
 
 # setup
-RUN echo "source /opt/ros/melodic/setup.bash" >> $HOME/.bashrc \
-    && echo 'source /usr/share/gazebo/setup.sh' >> ~/.bashrc \
+RUN echo "source /opt/ros/noetic/setup.bash" >> $HOME/.bashrc \
     && echo 'source $HOME/catkin_ws/devel/setup.bash' >> $HOME/.bashrc \
     && echo 'export PATH=$HOME/.local/bin:/opt/BridgePoint:$PATH' >> $HOME/.bashrc
