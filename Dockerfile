@@ -1,4 +1,4 @@
-FROM dorowu/ubuntu-desktop-lxde-vnc:focal
+FROM dorowu/ubuntu-desktop-lxde-vnc:focal-arm64
 
 # WORKDIR /home/ubuntu
 
@@ -9,7 +9,7 @@ RUN useradd -U -d /home/ubuntu ubuntu && \
 RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu
 RUN chmod 0440 /etc/sudoers.d/ubuntu
 
-RUN rm /etc/apt/sources.list.d/google-chrome.list
+RUN rm -f /etc/apt/sources.list.d/google-chrome.list
 
 # update basic packages
 RUN apt-get update \
@@ -28,7 +28,9 @@ RUN apt-get update \
         lsb-release \
         apt-utils \
         rsync \
-	    openjdk-8-jre
+        unzip \
+ 	    openjdk-11-jre \
+        libswt-gtk-4-jni
 
 # Intall ROS
 
@@ -61,9 +63,9 @@ RUN cd $HOME \
 # 	&& make -j4 \
 # 	&& sudo make install \
 # 	&& cd $HOME \
-# 	&& wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh \
-# 	&& chmod +x ./install_geographiclib_datasets.sh \
-# 	&& ./install_geographiclib_datasets.sh
+RUN	wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh \
+ 	&& chmod +x ./install_geographiclib_datasets.sh \
+ 	&& ./install_geographiclib_datasets.sh
 
 # download ardupilot
 #ENV USER=ardupilot
@@ -83,6 +85,13 @@ RUN $HOME/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y
 USER root
 
 # install BridgePoint
+RUN wget https://s3.amazonaws.com/xtuml-releases/nightly-build/org.xtuml.bp.product-linux.gtk.x86_64.zip \
+    && unzip org.xtuml.bp.product-linux.gtk.x86_64.zip
+
+# cleanup
+RUN rm -f install_geographiclib_datasets.sh \
+    && rm -f org.xtuml.bp.product-linux.gtk.x86_64.zip
+
 #USER root
 #ENV FID=1pKfnoVFFEykcXuDG26_isCIbAfSxYMXD
 #RUN cd /opt \
@@ -119,3 +128,8 @@ USER root
 #    && echo 'source /usr/share/gazebo/setup.sh' >> ~/.bashrc \
 #    && echo 'source $HOME/catkin_ws/devel/setup.bash' >> $HOME/.bashrc \
 #    && echo 'export PATH=$HOME/.local/bin:/opt/BridgePoint:$PATH' >> $HOME/.bashrc
+
+# setup .bashrc
+RUN echo "export PATH=$PATH:$HOME/.local/bin" \
+    && echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc \
+    && echo "source  $HOME/catkin_ws/devel/setup.bash" >> ~/.bashrc
