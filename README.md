@@ -10,7 +10,7 @@
 
 1. Download AirSim prebuild binary
 
-I am using AirSimNH but you can choose according to your preference.
+I am using AirSimNH but you can choose　a binary according to your preference.
 https://github.com/Microsoft/AirSim/releases
 
 2. Confirm WSL version in Command Prompt or PowerShell
@@ -93,4 +93,10 @@ Also, open a new terminal tab or window and execute:
 ```
 > rosrun iq_gnc square
 ```
-
+9. Use BridgePoint
+Launch BrigePoint as follows:
+```
+~/BridgePoint/bridgepoint
+```
+Clone a template repository and import it.
+https://github.com/hisazumi/gnc/
