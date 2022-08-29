@@ -1,4 +1,4 @@
-# Setup APRISRC environments
+# Setup APRISRC environments with AirSim
 
 ## Prerequisites
 
@@ -8,7 +8,12 @@
 
 ## Installation
 
-1. Confirm WSL version in Command Prompt or PowerShell
+1. Download AirSim prebuild binary
+
+I am using AirSimNH but you can choose according to your preference.
+https://github.com/Microsoft/AirSim/releases
+
+2. Confirm WSL version in Command Prompt or PowerShell
 
 ```
 > wsl --status
@@ -26,16 +31,16 @@ If default version of your env is 2, change the default version as follows:
 > wsl --set-default-version 1
 ````
 
-2. Install Ubuntu 20.04 
+3. Install Ubuntu 20.04 
 
 Install Ubuntu 20.04.XX from Microsoft Store. 
 
-3. Install the development environment to execute scripts
+4. Install the development environment to execute scripts
 
 download install-to-ubuntu20-02.sh from this repository, and execute it on the wsl you installed in previous step.
 
-4. Install VcXsrv for using BridgePoint (or other X Window apps)
+5. Install VcXsrv for using BridgePoint (or other X Window apps)
 
 https://sourceforge.net/projects/vcxsrv/
 
-5. Enjoy it!
+6. Enjoy it!
