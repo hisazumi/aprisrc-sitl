@@ -44,3 +44,53 @@ download install-to-ubuntu20-02.sh from this repository, and execute it on the w
 https://sourceforge.net/projects/vcxsrv/
 
 6. Enjoy it!
+
+## How to launch Airsim and ArduCopter
+
+1. Make settings.json for AirSim
+Make new file (Windows Home Directory)/Documents/AirSim/settings.json and write as follows:
+```
+{
+  "Vehicles": {
+    "Copter": {
+      "VehicleType": "ArduCopter",
+      "UseSerial": false,
+      "LocalHostIp": "0.0.0.0",
+      "UdpIp": "127.0.0.1",
+      "UdpPort": 9003,
+      "ControlPort": 9002
+    }
+  }
+}
+```
+2. Launch AirSim 
+3. Build codes
+```
+(cd catkin_ws/src && catkin build)
+```
+4. execute ArduCopter SITL on WSL env as follows:
+```
+> sim_vehicle.py -v ArduCopter -f airsim-copter 
+```
+5. Put "arm throttle" command into SITL console
+```
+STABILIZE> arm throttle
+```
+6. Change mode to "guided"
+```
+STABILIZE> mode guided
+```
+7. Takeoff
+```
+GUIDED> takeoff 10
+```
+8. run program
+Open a new terminal and execute a command as follows:
+```
+> roslaunch iq_sim apm.launch
+```
+Also, open a new terminal tab or window and execute:
+```
+> rosrun iq_gnc square
+```
+
