@@ -1,4 +1,4 @@
-FROM dorowu/ubuntu-desktop-lxde-vnc:focal-arm64
+FROM dorowu/ubuntu-desktop-lxde-vnc:focal
 
 # WORKDIR /home/ubuntu
 
@@ -9,8 +9,9 @@ RUN useradd -U -d /home/ubuntu ubuntu && \
 RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu
 RUN chmod 0440 /etc/sudoers.d/ubuntu
 
+RUN rm /etc/apt/sources.list.d/google-chrome.list
+
 # update basic packages
-# rm /etc/apt/sources.list.d/google-chrome.list \
 RUN apt-get update \
 #     && apt-get upgrade -y \
     && apt-get install -q -y \
