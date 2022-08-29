@@ -1,66 +1,41 @@
-# How to connect this container
+# Setup APRISRC environments
 
-1. Launch the container in your host side
-```
-docker run -p 8080:80 hisazumi/aprisrc-sitl:latest
-```
+## Prerequisites
 
-2. Access http://localhost:8080 from your Web broswer
+* Windows 11 or 10
+* Windows Subsystem for Linux 1 (WSL1)
+* Ubuntu 20.04 on WSL1
 
-# Control a quad-copter in the simulator manually
+## Installation
 
-1. Execute the Gazebo simulator. Double click 'simulator.sh' on the desktop to launch Gazebo simulator. Wait a minute. 
-
-2. Open LXTerminal and execute ./Desktop/sitl.sh to launch the Software-in-the-Loop env of ArduPilot. Wait a minute.
-
-3. Input follwing commands into SITL temrinal launched at 2.:
-```
-mode guided
-arm throttle
-takeoff 1
-```
-
-# Control a quad-copter from a C++ program
-
-1. Build sample source codes. Open LXTerminal and execute commands as follows:
+1. Confirm WSL version in Command Prompt or PowerShell
 
 ```
-cd catkin
-catkin build
+> wsl --status
+既定の配布: docker-desktop
+既定のバージョン: 1
+
+Linux 用 Windows サブシステムの最終更新日: 2022/06/23
+WSL の自動更新が有効になっています。
+
+カーネル バージョン: 5.10.102.1
 ```
 
-and relaunch LXTerminal (or just execute bash) to reload ~/.bashrc
-
-2. Edit catkin_ws/src/iq_gnc/CMakefile.txt to enable to build gnc_tutorial.cpp. Remove '#' the head of the lines as follows:
-
+If default version of your env is 2, change the default version as follows:
 ```
-206: add_executable(gnc_example src/gnc_tutorial.cpp)
-207: target_link_libraries(gnc_example ${catkin_LIBRARIES})
-```
-
-3. Execute the Gazebo simulator. Double click 'simulator.sh' on the desktop to launch Gazebo simulator. Wait a minute. 
-
-4. Execute ./Desktop/sitl.sh in new tab in terminal to launch the Software-in-the-Loop env of ArduPilot. Wait a minute.
-
-5. Launch apm in new tab in terminal:
-
-```
-roslaunch iq_sim apm.launch
-```
-
-6. Launch sample code in new tab:
-
-```
-rosrun iq_gnc gnc_example
-```
-
-7. Finally change mode to guided in sitl.sh terminal
-
-```
-mode guided
+> wsl --set-default-version 1
 ````
 
-# References
-- Base container https://hub.docker.com/r/dorowu/ubuntu-desktop-lxde-vnc/ 
-- ArduPilot https://ardupilot.org/dev/docs/sitl-simulator-software-in-the-loop.html
+2. Install Ubuntu 20.04 
 
+Install Ubuntu 20.04.XX from Microsoft Store. 
+
+3. Install the development environment to execute scripts
+
+download install-to-ubuntu20-02.sh from this repository, and execute it on the wsl you installed in previous step.
+
+4. Install VcXsrv for using BridgePoint (or other X Window apps)
+
+https://sourceforge.net/projects/vcxsrv/
+
+5. Enjoy it!
