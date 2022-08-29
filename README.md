@@ -1,66 +1,102 @@
-# How to connect this container
+# Setup APRISRC environments with AirSim
 
-1. Launch the container in your host side
-```
-docker run -p 8080:80 hisazumi/aprisrc-sitl:latest
-```
+## Prerequisites
 
-2. Access http://localhost:8080 from your Web broswer
+* Windows 11 or 10
+* Windows Subsystem for Linux 1 (WSL1)
+* Ubuntu 20.04 on WSL1
 
-# Control a quad-copter in the simulator manually
+## Installation
 
-1. Execute the Gazebo simulator. Double click 'simulator.sh' on the desktop to launch Gazebo simulator. Wait a minute. 
+1. Download AirSim prebuild binary
 
-2. Open LXTerminal and execute ./Desktop/sitl.sh to launch the Software-in-the-Loop env of ArduPilot. Wait a minute.
+I am using AirSimNH but you can choose　a binary according to your preference.
+https://github.com/Microsoft/AirSim/releases
 
-3. Input follwing commands into SITL temrinal launched at 2.:
-```
-mode guided
-arm throttle
-takeoff 1
-```
-
-# Control a quad-copter from a C++ program
-
-1. Build sample source codes. Open LXTerminal and execute commands as follows:
+2. Confirm WSL version in Command Prompt or PowerShell
 
 ```
-cd catkin
-catkin build
+> wsl --status
+既定の配布: docker-desktop
+既定のバージョン: 1
+
+Linux 用 Windows サブシステムの最終更新日: 2022/06/23
+WSL の自動更新が有効になっています。
+
+カーネル バージョン: 5.10.102.1
 ```
 
-and relaunch LXTerminal (or just execute bash) to reload ~/.bashrc
-
-2. Edit catkin_ws/src/iq_gnc/CMakefile.txt to enable to build gnc_tutorial.cpp. Remove '#' the head of the lines as follows:
-
+If default version of your env is 2, change the default version as follows:
 ```
-206: add_executable(gnc_example src/gnc_tutorial.cpp)
-207: target_link_libraries(gnc_example ${catkin_LIBRARIES})
-```
-
-3. Execute the Gazebo simulator. Double click 'simulator.sh' on the desktop to launch Gazebo simulator. Wait a minute. 
-
-4. Execute ./Desktop/sitl.sh in new tab in terminal to launch the Software-in-the-Loop env of ArduPilot. Wait a minute.
-
-5. Launch apm in new tab in terminal:
-
-```
-roslaunch iq_sim apm.launch
-```
-
-6. Launch sample code in new tab:
-
-```
-rosrun iq_gnc gnc_example
-```
-
-7. Finally change mode to guided in sitl.sh terminal
-
-```
-mode guided
+> wsl --set-default-version 1
 ````
 
-# References
-- Base container https://hub.docker.com/r/dorowu/ubuntu-desktop-lxde-vnc/ 
-- ArduPilot https://ardupilot.org/dev/docs/sitl-simulator-software-in-the-loop.html
+3. Install Ubuntu 20.04 
 
+Install Ubuntu 20.04.XX from Microsoft Store. 
+
+4. Install the development environment to execute scripts
+
+download install-to-ubuntu20-02.sh from this repository, and execute it on the wsl you installed in previous step.
+
+5. Install VcXsrv for using BridgePoint (or other X Window apps)
+
+https://sourceforge.net/projects/vcxsrv/
+
+6. Enjoy it!
+
+## How to launch Airsim and ArduCopter
+
+1. Make settings.json for AirSim
+Make new file (Windows Home Directory)/Documents/AirSim/settings.json and write as follows:
+```
+{
+  "Vehicles": {
+    "Copter": {
+      "VehicleType": "ArduCopter",
+      "UseSerial": false,
+      "LocalHostIp": "0.0.0.0",
+      "UdpIp": "127.0.0.1",
+      "UdpPort": 9003,
+      "ControlPort": 9002
+    }
+  }
+}
+```
+2. Launch AirSim 
+3. Build codes
+```
+(cd catkin_ws/src && catkin build)
+```
+4. execute ArduCopter SITL on WSL env as follows:
+```
+> sim_vehicle.py -v ArduCopter -f airsim-copter 
+```
+5. Put "arm throttle" command into SITL console
+```
+STABILIZE> arm throttle
+```
+6. Change mode to "guided"
+```
+STABILIZE> mode guided
+```
+7. Takeoff
+```
+GUIDED> takeoff 10
+```
+8. run program
+Open a new terminal and execute a command as follows:
+```
+> roslaunch iq_sim apm.launch
+```
+Also, open a new terminal tab or window and execute:
+```
+> rosrun iq_gnc square
+```
+9. Use BridgePoint
+Launch BrigePoint as follows:
+```
+~/BridgePoint/bridgepoint
+```
+Clone a template repository and import it.
+https://github.com/hisazumi/gnc/
