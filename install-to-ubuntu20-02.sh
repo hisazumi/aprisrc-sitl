@@ -50,6 +50,7 @@ cd $HOME \
 SKIP_AP_EXT_ENV=1 SKIP_AP_GRAPHIC_ENV=1 SKIP_AP_COV_ENV=1 SKIP_AP_GIT_CHECK=1 $HOME/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y 
 
 # install bridgepoint
+cd $HOME
 wget https://s3.amazonaws.com/xtuml-releases/nightly-build/org.xtuml.bp.product-linux.gtk.x86_64.zip
 unzip org.xtuml.bp.product-linux.gtk.x86_64.zip
 
