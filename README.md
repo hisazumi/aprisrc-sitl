@@ -13,6 +13,8 @@
 1. Install AirSim
 2. Install Ubuntu 20.04 on WSL1
 3. Install Ardupilot and BridgePoint using a installation script
+4. Install VcXsrv for running BridgePoint (or other Ubuntu GUI apps)
+
 
 ### 1. Install AirSim
 
@@ -38,7 +40,7 @@ https://www.microsoft.com/en-us/download/details.aspx?id=35
 
 ### 2. Install Ubuntu 20.04 on WSL1
 
-2. Confirm WSL version in Command Prompt or PowerShell
+1. Confirm WSL version in Command Prompt or PowerShell
 
 ```
 > wsl --status
@@ -56,21 +58,33 @@ If default version of your env is 2, change the default version as follows:
 > wsl --set-default-version 1
 ````
 
-3. Install Ubuntu 20.04 
+2. Install Ubuntu 20.04 
 
 Install Ubuntu 20.04.XX from Microsoft Store. 
 
-4. Install the development environment to execute scripts
 
-download install-to-ubuntu20-02.sh from this repository, and execute it on the wsl you installed in previous step.
+## 3. Install Ardupilot and BridgePoint using a installation script
 
-5. Install VcXsrv for using BridgePoint (or other X Window apps)
+1. Open ubuntu terminal from your start menu
+
+2. Download install-to-ubuntu20-02.sh to from this repository as followings in the ubuntu terminal:
+```sh
+wget https://raw.githubusercontent.com/hisazumi/aprisrc-sitl/forairsim/install-to-ubuntu20-02.sh
+```
+
+3. Execute the installation script you downloaded as follows:
+```sh
+sh install-to-ubuntu20-02.sh
+```
+
+## 4. Install VcXsrv for running BridgePoint (or other Ubuntu GUI apps)
+
+1. Install VcXsrv for using BridgePoint (or other X Window apps)
 
 https://sourceforge.net/projects/vcxsrv/
 
-6. Enjoy it!
 
-## How to launch Airsim and ArduCopter
+## 5. Launch Airsim and ArduCopter
 
 1. Make settings.json for AirSim
 Make new file (Windows Home Directory)/Documents/AirSim/settings.json and write as follows:
