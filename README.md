@@ -40,6 +40,10 @@ https://www.microsoft.com/en-us/download/details.aspx?id=35
 
 ### 2. Install Ubuntu 20.04 on WSL1
 
+1. Turn on Windows Subsystem for Linux
+
+https://learn.microsoft.com/en-us/windows/wsl/install
+
 1. Confirm WSL version in Command Prompt or PowerShell
 
 ```
