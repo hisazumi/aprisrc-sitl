@@ -8,10 +8,35 @@
 
 ## Installation
 
-1. Download AirSim prebuild binary
+### Overview
 
-I am using AirSimNH but you can choose　a binary according to your preference.
+1. Install AirSim
+2. Install Ubuntu 20.04 on WSL1
+3. Install Ardupilot and BridgePoint using a installation script
+
+### 1. Install AirSim
+
+1. Install Visual Studio Community 2022
+
+Make sure to select Desktop Development with C++ and Windows 10 SDK 10.0.19041 (should be selected by default) and select the latest .NET Framework SDK under the 'Individual Components' tab while installing VS 2022.
+
+2. Download AirSim prebuild binary
+
+I am using AirSimNH but you can choose a binary according to your preference. If your PC is low on memory or not equipped with a descrete GPU, you may find it more comfortable to choose a world with a smaller binary size.
+
 https://github.com/Microsoft/AirSim/releases
+
+3. Install Microsoft DirectX End-User Runtime if needed
+
+Install Microsoft DirectX End-User Runtime if you met an error message like "The following componet(s) are required to run this program: DirectX Runtime" while launching AirSim.
+
+Download the runtime, and install it.
+
+https://www.microsoft.com/en-us/download/details.aspx?id=35
+
+
+
+### 2. Install Ubuntu 20.04 on WSL1
 
 2. Confirm WSL version in Command Prompt or PowerShell
 
