@@ -43,20 +43,35 @@ https://www.microsoft.com/en-us/download/details.aspx?id=35
 1. Confirm WSL version in Command Prompt or PowerShell
 
 ```
-> wsl --status
-既定の配布: docker-desktop
-既定のバージョン: 1
+C:\Users\guesten>wsl --status
+Default Version: 2
 
-Linux 用 Windows サブシステムの最終更新日: 2022/06/23
-WSL の自動更新が有効になっています。
+Windows Subsystem for Linux was last updated on Fri
+The Windows Subsystem for Linux kernel can be manually updated with 'wsl --update', but automatic updates cannot occur due to your system settings.
+To receive automatic kernel updates, please enable the Windows Update setting: 'Receive updates for other Microsoft products when you update Windows'.
+For more information please visit https://aka.ms/wsl2kernel.
 
-カーネル バージョン: 5.10.102.1
+Kernel version: 5.10.16
 ```
 
 If default version of your env is 2, change the default version as follows:
 ```
 > wsl --set-default-version 1
 ````
+
+It is ok if you can see following message:
+
+```
+wsl --status
+Default Version: 1
+
+Windows Subsystem for Linux was last updated on Fri
+The Windows Subsystem for Linux kernel can be manually updated with 'wsl --update', but automatic updates cannot occur due to your system settings.
+To receive automatic kernel updates, please enable the Windows Update setting: 'Receive updates for other Microsoft products when you update Windows'.
+For more information please visit https://aka.ms/wsl2kernel.
+
+Kernel version: 5.10.16
+```
 
 2. Install Ubuntu 20.04 
 
