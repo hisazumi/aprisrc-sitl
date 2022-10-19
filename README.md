@@ -142,16 +142,7 @@ STABILIZE> mode guided
 ```
 GUIDED> takeoff 10
 ```
-8. run program
-Open a new terminal and execute a command as follows:
-```
-> roslaunch iq_sim apm.launch
-```
-Also, open a new terminal tab or window and execute:
-```
-> rosrun iq_gnc square
-```
-9. Use BridgePoint
+8. Use BridgePoint
 Launch BrigePoint as follows:
 ```
 ~/BridgePoint/bridgepoint
