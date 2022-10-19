@@ -86,7 +86,7 @@ Install Ubuntu 20.04.XX from Microsoft Store.
 
 1. Open ubuntu terminal from your start menu
 
-2. Download install-to-ubuntu20-02.sh to from this repository as followings in the ubuntu terminal:
+2. Download install-to-ubuntu20-02.sh from this repository as followings in the ubuntu terminal:
 ```sh
 wget https://raw.githubusercontent.com/hisazumi/aprisrc-sitl/forairsim/install-to-ubuntu20-02.sh
 ```
