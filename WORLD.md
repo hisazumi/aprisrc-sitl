@@ -16,9 +16,8 @@ https://microsoft.github.io/AirSim/unreal_blocks/
 
 ## Import existing materials
 
-1. Find good materials from marketplace of the epic games and download it. I tried "Landscape Backgrounds" by Gokhan Karadayi.
-2. Click "Add To Project" button and select the location of Blcoks environment in AirSim source codes that you built in the phase of "Setup Blcoks Environment for AirSim"
-3. Open "Project Settings", find "Default Maps", and select prefered map you imported in "Editor Startup Map" and "Game Default Map".
-4. Select "AirSimGamdeMode" in "Game Mode" in World Setting view.
-5. Move "Player Start" actor to appropriate location. The actor is for specifying the start location of our quadcpter. Sometimes the default location is under the ground. Make sure to place it on the ground.
-
+1. Select good resources and download them from the epic games store. I tried Gokhan Karadayi's "Landscape Backgrounds." 
+2. Select the location of the "Blocks" environment in the AirSim source codes that you created during the "Setup Blocks Environment for AirSim" step by clicking the "Add To Project" button. 
+3. Select the preferred map you imported in "Editor Startup Map" and "Game Default Map" under "Default Maps" in "Project Settings." 
+4. In the World Setting window, find "Game Mode" and select "AirSimGamdeMode." 
+5. Place the "Player Start" actor in the proper place. The actor is used to designate where our quadcopter should start. The default position may occasionally be underground. Be sure to set it down on the ground.
