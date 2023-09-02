@@ -44,7 +44,7 @@ cd $HOME \
 
 # download ardupilot
 cd $HOME \
-    && git clone https://github.com/ArduPilot/ardupilot -b Copter-4.0 \
+    && git clone https://github.com/ArduPilot/ardupilot -b Copter-4.1 \
     && cd ardupilot && git submodule update --init --recursive
 
 SKIP_AP_EXT_ENV=1 SKIP_AP_GRAPHIC_ENV=1 SKIP_AP_COV_ENV=1 SKIP_AP_GIT_CHECK=1 $HOME/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh -y 
