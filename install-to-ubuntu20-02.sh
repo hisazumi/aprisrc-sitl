@@ -14,7 +14,8 @@ sudo apt-get update \
         apt-utils \
         rsync \
         unzip \
-	    openjdk-11-jre \
+	openjdk-11-jre \
+        openjdk-17-jdk-headless \
         libswt-gtk-4-jni
 
 # Intall ROS
